@@ -93,12 +93,3 @@ Feel free to use and modify!
 
 ## Contributors
 - **[Ahmed Amin]** (Developer)
-
-## Final Notes
-✔️ Works on **STM32F411RE**  
-✔️ Uses **PB12-PB15 for 4-bit DAC output**  
-✔️ Fully tested with an external DAC  
-
----
-
-Let me know if you need **any modifications**! 🚀
