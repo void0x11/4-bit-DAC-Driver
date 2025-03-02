@@ -1,0 +1,4 @@
+../Src/main.c:24:5:main	16	static
+../Src/main.c:43:6:GPIO_Config	4	static
+../Src/main.c:68:6:Set_DAC_Value	16	static
+../Src/main.c:100:9:Convert_Step_To_Binary	16	static
