@@ -51,10 +51,10 @@ cd STM32-DAC-Driver
 
 ### Step 2: Compile the Code
 Use **STM32CubeIDE** to import as a c project
-```
 
 ### Step 3: Flash the Code to the Board
 Use **STM32CubeProgrammer** to build the project
+
 
 ## Usage
 ### Step 1: Modify the DAC Step Value
