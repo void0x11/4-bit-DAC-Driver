@@ -32,7 +32,7 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** on 
 
 ### DAC Schematic Design Design
 
-![alt text](<R to R DAC (Final).BMP>)
+![alt text](<R to R DAC (Final).png>)
 
 ### Pin Configuration from the Nucleo board to the DAC inputs
 | **Pin**  | **GPIO** | **Function (DAC Bit)** |
