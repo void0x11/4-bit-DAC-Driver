@@ -80,6 +80,7 @@ Expected output (for step `9` → `1001`):
 ```
 GPIOB->ODR: 0x9000
 ```
+
 This confirms **PB15 (1) PB14 (0) PB13 (0) PB12 (1)**.
 
 ## License
