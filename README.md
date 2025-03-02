@@ -30,7 +30,7 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** on 
 
 ![alt text](<Pasted image 20250216185434.png>)
 
-### DAC Schematic Design Design
+### External DAC Schematic Design
 
 ![alt text](<R to R DAC (Final).png>)
 
