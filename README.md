@@ -14,10 +14,9 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** on 
 /Project_Root
 │── Debug/          # Compiled binaries and debug files
 │── Src/            # Source code (.c files)
+|────main.c         # Main firmware source file
 │── Startup/        # Startup files for STM32
 │── README.md       # Documentation
-│── Makefile        # Build instructions (if applicable)
-│── main.c          # Main firmware source file
 ```
 
 ## Hardware Setup
@@ -27,7 +26,15 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** on 
 - **Jumper Wires**
 - **Multimeter (for voltage measurements)**
 
-### Pin Configuration
+### Nucleo-F411RE Schematic
+
+![alt text](<Pasted image 20250216185434.png>)
+
+### DAC Schematic Design Design
+
+![alt text](<R to R DAC (Final).BMP>)
+
+### Pin Configuration from the Nucleo board to the DAC inputs
 | **Pin**  | **GPIO** | **Function (DAC Bit)** |
 |---------|---------|---------------------|
 | PB12    | X0 (LSB)  | Least Significant Bit |
@@ -68,42 +75,6 @@ Expected **binary output (PB12-PB15)**:
 | 10        | `1010` (HIGH LOW HIGH LOW) |
 | 13        | `1101` (HIGH HIGH LOW HIGH) |
 
-### Step 2: Observe DAC Output
-- Connect **PB12-PB15** to an **external DAC**.
-- Measure the output **analog voltage** using a multimeter.
-
-## Code Breakdown
-### GPIO Configuration
-```c
-void GPIO_Config(void)
-{
-    RCC->AHB1ENR |= GPIOBEN; // Enable GPIOB Clock
-
-    // Set PB12, PB13, PB14, PB15 as Output
-    GPIOB->MODER &= ~(3U << 24);
-    GPIOB->MODER |=  (1U << 24);
-    GPIOB->MODER &= ~(3U << 26);
-    GPIOB->MODER |=  (1U << 26);
-    GPIOB->MODER &= ~(3U << 28);
-    GPIOB->MODER |=  (1U << 28);
-    GPIOB->MODER &= ~(3U << 30);
-    GPIOB->MODER |=  (1U << 30);
-}
-```
-
-### Setting DAC Output
-```c
-void Set_DAC_Value(uint8_t value)
-{
-    GPIOB->ODR &= ~(PB12 | PB13 | PB14 | PB15); // Clear all bits
-
-    if (value & (1U << 0)) GPIOB->ODR |= PB12;  
-    if (value & (1U << 1)) GPIOB->ODR |= PB13;  
-    if (value & (1U << 2)) GPIOB->ODR |= PB14;  
-    if (value & (1U << 3)) GPIOB->ODR |= PB15;  
-}
-```
-
 ## Debugging
 ### Verify GPIO Output
 Check if the pins are toggling correctly:
@@ -121,9 +92,7 @@ MIT License.
 Feel free to use and modify!
 
 ## Contributors
-- **[Your Name]** (Developer)
-- **[Contributor Name]** (Hardware Testing)
-- **[Your Organization]** (Sponsor)
+- **[Ahmed Amin]** (Developer)
 
 ## Final Notes
 ✔️ Works on **STM32F411RE**  
