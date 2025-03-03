@@ -1,91 +1,80 @@
-# STM32 DAC Driver (4-Bit Parallel)
+# 4-bit DAC Driver for STM32F411RE
 
-## Overview
-This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** on an **STM32 Nucleo-F411RE** development board. The driver configures **PB12, PB13, PB14, and PB15** as **digital outputs** to interface with an external DAC circuit.
+## 📌 Overview
+This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** for the **STM32F411RE** using GPIO-based digital outputs. The driver follows an **MCAL (Microcontroller Abstraction Layer)** architecture, ensuring modularity and scalability.
 
-## Features
-- **4-bit Digital Output** via GPIOB
-- **Precise Voltage Steps** based on 4-bit binary representation
-- **Uses Low-Level Register Access (No HAL)**
-- **Efficient Bitwise Operations for Performance**
-
-## Directory Structure
+## 📁 Project Structure
 ```
 /Project_Root
-│── Debug/          # Compiled binaries and debug files
-│── Src/            # Source code (.c files)
-|────main.c         # Main firmware source file
-│── Startup/        # Startup files for STM32
-│── README.md       # Documentation
+│── Src/
+│   ├── DAC_program.c    # DAC driver implementation
+│── Inc/
+│   ├── DAC_interface.h  # Public function prototypes
+│   ├── DAC_private.h    # Internal registers and macros
+│   ├── DAC_config.h     # Configurable settings
+│── main.c               # Application entry point
+│── Makefile (if needed)
 ```
 
-## Hardware Setup
-### Required Components
-- **STM32 Nucleo-F411RE**
-- **External DAC**
-- **Jumper Wires**
-- **Multimeter (for voltage measurements)**
+## ⚙️ Features
+- **4-bit DAC implementation using GPIO pins**
+- **Configurable voltage reference (VREF)**
+- **Uses `PB12 - PB15` for output data**
+- **Follows industry-standard MCAL architecture**
+- **Modular design with `interface.h`, `config.h`, `private.h`, and `program.c`**
 
-### Nucleo-F411RE Schematic
+## 🚀 Getting Started
+### 1️⃣ Hardware Setup
+- Connect the **DAC output (PB12 - PB15)** to an external DAC circuit or logic analyzer.
+- Ensure **VREF is set to 5V** (configurable in `DAC_config.h`).
 
-![alt text](<Pasted image 20250216185434.png>)
+### 2️⃣ Software Requirements
+- **STM32CubeIDE** or **Keil uVision**
+- **ARM GCC Toolchain** (if using Makefile)
+- **ST-Link Debugger** for programming
 
-### External DAC Schematic Design
-
-![alt text](<R to R DAC (Final).png>)
-
-### Pin Configuration from the Nucleo board to the DAC inputs
-| **Pin**  | **GPIO** | **Function (DAC Bit)** |
-|---------|---------|---------------------|
-| PB12    | X0 (LSB)  | Least Significant Bit |
-| PB13    | X1        | Second Bit |
-| PB14    | X2        | Third Bit |
-| PB15    | X3 (MSB)  | Most Significant Bit |
-
-## Installation & Compilation
-### Step 1: Clone the Repository
+### 3️⃣ Build & Flash
+#### **Using Makefile (Optional)**
 ```sh
-git clone https://github.com/your-repo/STM32-DAC-Driver.git
-cd STM32-DAC-Driver
+make clean
+make all
+make flash
 ```
 
-### Step 2: Compile the Code
-Use **STM32CubeIDE** to import as a c project
+#### **Using STM32CubeIDE**
+1. Import the project
+2. Build the project (`Ctrl + B`)
+3. Flash to the board (`Run > Debug`)
 
-### Step 3: Flash the Code to the Board
-Use **STM32CubeProgrammer** to build the project
-
-
-## Usage
-### Step 1: Modify the DAC Step Value
-In `main.c`, set the `step` value:
+## 🔧 Configuration
+The driver includes `DAC_config.h` for user settings:
 ```c
-uint8_t step = 15;  // Set a value between 0-15
+#define DAC_VREF       5.0   // Reference Voltage (V)
+#define DAC_MAX_STEPS  15    // Max 4-bit steps (0-15)
+#define DAC_DEFAULT_STEP 0   // Default startup step value
 ```
-Expected **binary output (PB12-PB15)**:
-| **Decimal** | **Binary Output (PB15 PB14 PB13 PB12)** |
-|------------|----------------------------------|
-| 3         | `0011` (LOW LOW HIGH HIGH) |
-| 7         | `0111` (LOW HIGH HIGH HIGH) |
-| 10        | `1010` (HIGH LOW HIGH LOW) |
-| 13        | `1101` (HIGH HIGH LOW HIGH) |
+Modify these values as needed.
 
-## Debugging
-### Verify GPIO Output
-Check if the pins are toggling correctly:
-```c
-printf("GPIOB->ODR: 0x%X\n", GPIOB->ODR);
-```
-Expected output (for step `9` → `1001`):
-```
-GPIOB->ODR: 0x9000
-```
+## 📝 API Reference
+### **`void DAC_voidInit(void)`**
+Initializes the DAC by configuring GPIOB and enabling the clock.
 
-This confirms **PB15 (1) PB14 (0) PB13 (0) PB12 (1)**.
+### **`void DAC_voidSetValue(uint8_t stepValue)`**
+Sets the DAC output based on the provided 4-bit step value.
 
-## License
-MIT License.  
-Feel free to use and modify!
+### **`uint8_t DAC_u8ConvertStepToBinary(uint8_t step)`**
+Ensures the step value is within the valid 4-bit range (0-15).
 
-## Contributors
-- **[Ahmed Amin]** (Developer)
+## 🛠️ Debugging & Testing
+- Use an **oscilloscope** to measure DAC output voltages.
+- Use `GPIOB->ODR` register to verify output states.
+- Debug using **ST-Link Utility** or **OpenOCD**.
+
+## 📌 Future Enhancements
+- Add **PWM-based DAC smoothing** for better resolution.
+- Implement **DMA-based DAC updates**.
+- Add support for **higher resolution DACs (8-bit, 12-bit, etc.)**.
+
+## 📜 License
+This project is open-source under the **MIT License**.
+---
