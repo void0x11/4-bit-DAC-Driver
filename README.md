@@ -13,7 +13,6 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** for
 │   ├── DAC_private.h    # Internal registers and macros
 │   ├── DAC_config.h     # Configurable settings
 │── main.c               # Application entry point
-│── Makefile (if needed)
 ```
 
 ## ⚙️ Features
