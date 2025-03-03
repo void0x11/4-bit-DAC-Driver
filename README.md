@@ -33,12 +33,6 @@ This project implements a **4-bit DAC (Digital-to-Analog Converter) driver** for
 - **ST-Link Debugger** for programming
 
 ### 3️⃣ Build & Flash
-#### **Using Makefile (Optional)**
-```sh
-make clean
-make all
-make flash
-```
 
 #### **Using STM32CubeIDE**
 1. Import the project
